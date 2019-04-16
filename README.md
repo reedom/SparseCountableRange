@@ -1,6 +1,6 @@
 # SparseRanges
 
-[![CI Status](https://img.shields.io/travis/HANAI tohru/SparseRanges.svg?style=flat)](https://travis-ci.org/HANAI tohru/SparseRanges)
+[![CI Status](https://img.shields.io/travis/reedom/SparseRanges.svg?style=flat)](https://travis-ci.org/reedom/SparseRanges)
 [![Version](https://img.shields.io/cocoapods/v/SparseRanges.svg?style=flat)](https://cocoapods.org/pods/SparseRanges)
 [![License](https://img.shields.io/cocoapods/l/SparseRanges.svg?style=flat)](https://cocoapods.org/pods/SparseRanges)
 [![Platform](https://img.shields.io/cocoapods/p/SparseRanges.svg?style=flat)](https://cocoapods.org/pods/SparseRanges)
