@@ -18,16 +18,17 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+A collection of CountableRange objects that can express a sparsed range.
                        DESC
 
-  s.homepage         = 'https://github.com/HANAI tohru/SparseRanges'
+  s.homepage         = 'https://github.com/reedom/SparseRanges'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'HANAI tohru' => 'tohru@reedom.com' }
   s.source           = { :git => 'https://github.com/HANAI tohru/SparseRanges.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
+  s.swift_version = '4.0'
 
   s.source_files = 'SparseRanges/Classes/**/*'
 
