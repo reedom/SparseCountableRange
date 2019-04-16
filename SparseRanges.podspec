@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'SparseRanges'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of SparseRanges.'
+  s.summary          = 'A collection of CountableRange objects that expresses a sparsed range.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -22,7 +22,6 @@ TODO: Add long description of the pod here.
                        DESC
 
   s.homepage         = 'https://github.com/HANAI tohru/SparseRanges'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'HANAI tohru' => 'tohru@reedom.com' }
   s.source           = { :git => 'https://github.com/HANAI tohru/SparseRanges.git', :tag => s.version.to_s }
@@ -31,7 +30,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'SparseRanges/Classes/**/*'
-  
+
   # s.resource_bundles = {
   #   'SparseRanges' => ['SparseRanges/Assets/*.png']
   # }

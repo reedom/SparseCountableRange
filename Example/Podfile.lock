@@ -1,0 +1,27 @@
+PODS:
+  - Nimble (8.0.1)
+  - Quick (1.2.0)
+  - SparseRanges (0.1.0)
+
+DEPENDENCIES:
+  - Nimble (~> 8.0.0)
+  - Quick (~> 1.2.0)
+  - SparseRanges (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Nimble
+    - Quick
+
+EXTERNAL SOURCES:
+  SparseRanges:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Nimble: 45f786ae66faa9a709624227fae502db55a8bdd0
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  SparseRanges: 1cf69c28454492471e74dcfb4e3d4bc58dd96d0a
+
+PODFILE CHECKSUM: 55b5a801915431b3f1ccbae64a5a3a2e0de53d9a
+
+COCOAPODS: 1.6.1
