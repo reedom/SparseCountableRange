@@ -242,9 +242,3 @@ public class SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride 
     }
   }
 }
-
-extension CountableRange where Bound : Strideable, Bound.Stride : SignedInteger {
-  @inlinable public static func + (lhs: CountableRange<Bound>, rhs: CountableRange<Bound>) -> SparseCountableRange<Bound> {
-    return SparseCountableRange<Bound>(initial: [lhs, rhs])
-  }
-}
