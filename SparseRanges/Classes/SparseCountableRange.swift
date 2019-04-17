@@ -6,7 +6,7 @@
 /// r.add(35..<50)  // [10..<20, 30..<50] adds another but it will be merged with the second one.
 /// r.add(15..<35)  // [10..<50]          adds another and it will merge all because it overlaps with them.
 ///
-public class SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride : SignedInteger {
+public struct SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride : SignedInteger {
   private typealias klass = SparseCountableRange<Bound>
 
   private var _ranges: [CountableRange<Bound>]
@@ -148,7 +148,7 @@ public class SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride 
   /// - Returns: `true` if the `range` has modified the collection.
   /// `false` if the `range` has not modified the collection. Possibly
   ///  the `range` was empty or the collection has already contained it.
-  public func add(_ range: CountableRange<Bound>) -> Bool {
+  public mutating func add(_ range: CountableRange<Bound>) -> Bool {
     guard !range.isEmpty else { return false }
 
     var i = 0
@@ -205,8 +205,10 @@ public class SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride 
     return true
   }
 
+  // MARK: - helper methods
+
   /// Normailze the input array contents.
-  private class func normalize(ranges: inout [CountableRange<Bound>]) {
+  private static func normalize(ranges: inout [CountableRange<Bound>]) {
     guard !ranges.isEmpty else { return }
 
     ranges.removeAll(where: { $0.isEmpty })
@@ -222,9 +224,9 @@ public class SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride 
   /// - Parameter partial: If `true`, the merging ends when it sees a valid range,
   ///   which does not need to be merged. If `false`, it seeks till the end of the
   ///   array.
-  private class func mergeRanges(sortedRanges ranges: inout [CountableRange<Bound>],
-                                 startAt: Int,
-                                 partial: Bool) {
+  private static func mergeRanges(sortedRanges ranges: inout [CountableRange<Bound>],
+                                  startAt: Int,
+                                  partial: Bool) {
     guard !ranges.isEmpty else { return }
 
     var i = startAt

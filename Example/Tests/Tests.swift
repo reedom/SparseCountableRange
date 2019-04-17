@@ -72,12 +72,12 @@ class SparseCountableRangeSpec: QuickSpec {
     
     describe("add") {
       it("will return false for empty range") {
-        let r = SparseCountableRange<Int>()
+        var r = SparseCountableRange<Int>()
         expect(r.add(0..<0)).to(beFalse())
       }
       
       it("will add") {
-        let r = SparseCountableRange<Int>()
+        var r = SparseCountableRange<Int>()
         // initial
         expect(r.add(30..<40)).to(beTrue())
         expect(r.ranges) == [30..<40]
@@ -103,7 +103,7 @@ class SparseCountableRangeSpec: QuickSpec {
       }
       
       it("will return false for already contained ranges") {
-        let r = SparseCountableRange<Int>(initial: [1..<10])
+        var r = SparseCountableRange<Int>(initial: [1..<10])
         expect(r.add(1..<10)).to(beFalse())
         expect(r.add(1..<2)).to(beFalse())
         expect(r.add(9..<10)).to(beFalse())

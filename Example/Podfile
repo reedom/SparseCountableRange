@@ -2,6 +2,6 @@ use_frameworks!
 target 'SparseRanges_Tests' do
   pod 'SparseRanges', :path => '../'
 
-  pod 'Quick', '~> 1.2.0'
+  pod 'Quick', '~> 2.0.0'
   pod 'Nimble', '~> 8.0.0'
 end
