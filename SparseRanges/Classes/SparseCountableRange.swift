@@ -205,6 +205,11 @@ public struct SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride
     return true
   }
 
+  /// Remove all values from the collection.
+  public mutating func removeAll() {
+    _ranges.removeAll()
+  }
+
   // MARK: - helper methods
 
   /// Normailze the input array contents.

@@ -109,5 +109,14 @@ class SparseCountableRangeSpec: QuickSpec {
         expect(r.add(9..<10)).to(beFalse())
       }
     }
+
+    describe("removeAll") {
+      it("will empty the collection") {
+        var r = SparseCountableRange<Int>(initial: [1..<10])
+        expect(r.isEmpty).to(beFalse())
+        r.removeAll()
+        expect(r.isEmpty).to(beTrue())
+      }
+    }
   }
 }
