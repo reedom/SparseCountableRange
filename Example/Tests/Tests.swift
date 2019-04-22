@@ -68,6 +68,11 @@ class SparseCountableRangeSpec: QuickSpec {
         expect(r.gaps(60..<70)) == [60..<70]
         expect(r.gaps(61..<70)) == [61..<70]
       }
+
+      it("will return one gap") {
+        let r = SparseCountableRange<Int>(initial: [0..<3])
+        expect(r.gaps(0..<6)) == [3..<6]
+      }
     }
     
     describe("add") {

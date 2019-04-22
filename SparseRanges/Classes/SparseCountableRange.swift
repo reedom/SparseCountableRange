@@ -108,8 +108,9 @@ public struct SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride
         if result == nil {
           result = []
         }
-        result!.append(range.lowerBound ..< _ranges[i].lowerBound)
-
+        if range.lowerBound < _ranges[i].lowerBound {
+          result!.append(range.lowerBound ..< _ranges[i].lowerBound)
+        }
         if range.upperBound <= _ranges[i].upperBound {
           // `range` overlaps at the head of `i`...
           // i:     |----|
