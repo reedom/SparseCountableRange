@@ -148,7 +148,7 @@ public struct SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride
   /// - Returns: `true` if the `range` has modified the collection.
   /// `false` if the `range` has not modified the collection. Possibly
   ///  the `range` was empty or the collection has already contained it.
-  public mutating func add(_ range: CountableRange<Bound>) -> Bool {
+  @discardableResult public mutating func add(_ range: CountableRange<Bound>) -> Bool {
     guard !range.isEmpty else { return false }
 
     var i = 0
