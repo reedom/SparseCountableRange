@@ -14,7 +14,7 @@ class SparseCountableRangeSpec: QuickSpec {
         expect(r.countOfElements) == 0
       }
     }
-    
+
     describe("initial range") {
       var source = [10..<20, 30..<40]
       let r = SparseCountableRange<Int>(initial: source)
@@ -23,7 +23,7 @@ class SparseCountableRangeSpec: QuickSpec {
         expect(r.countOfRanges) == 2
         expect(r.countOfElements) == 20
       }
-      
+
       it("should be independant from the source") {
         expect(source) == [10..<20, 30..<40]
         source.removeAll(keepingCapacity: false)
@@ -31,7 +31,7 @@ class SparseCountableRangeSpec: QuickSpec {
         expect(r.ranges) == [10..<20, 30..<40]
       }
     }
-    
+
     describe("initial range contains empty ranges") {
       let source = [0..<0, 0..<0]
       let r = SparseCountableRange<Int>(initial: source)
@@ -40,7 +40,7 @@ class SparseCountableRangeSpec: QuickSpec {
         expect(r.countOfElements) == 0
       }
     }
-    
+
     describe("initial range normalization") {
       let source = [20..<30, 10..<20, 3..<5, 2..<4, 2..<4, 2..<6, 31..<32]
       let r = SparseCountableRange<Int>(initial: source)
@@ -49,14 +49,32 @@ class SparseCountableRangeSpec: QuickSpec {
         expect(r.ranges) == [2..<6, 10..<30, 31..<32]
       }
     }
-    
-    describe("gaps") {
-      it("will return input if it has no ranges") {
+
+    describe("differentials") {
+      it("will return input if the collection has no ranges") {
         let r = SparseCountableRange<Int>()
-        expect(r.gaps(0..<2)) == [0..<2]
+        expect(r.differentials(0..<2)) == [0..<2]
       }
-      
-      it("will return gaps") {
+
+      it("will return differentials") {
+        let r = SparseCountableRange<Int>(initial: [10..<20, 30..<40, 50..<60])
+        expect(r.differentials(1..<9)) == [1..<9]
+        expect(r.differentials(1..<10)) == [1..<10]
+        expect(r.differentials(1..<11)) == [1..<10]
+        expect(r.differentials(1..<20)) == [1..<10]
+        expect(r.differentials(10..<20)).to(beNil())
+        expect(r.differentials(1..<61)) == [1..<10, 20..<30, 40..<50, 60..<61]
+        expect(r.differentials(25..<61)) == [25..<30, 40..<50, 60..<61]
+        expect(r.differentials(60..<70)) == [60..<70]
+        expect(r.differentials(61..<70)) == [61..<70]
+      }
+
+      it("will return one differential") {
+        let r = SparseCountableRange<Int>(initial: [0..<3])
+        expect(r.differentials(0..<6)) == [3..<6]
+      }
+    }
+
         let r = SparseCountableRange<Int>(initial: [10..<20, 30..<40, 50..<60])
         expect(r.gaps(1..<9)) == [1..<9]
         expect(r.gaps(1..<10)) == [1..<10]

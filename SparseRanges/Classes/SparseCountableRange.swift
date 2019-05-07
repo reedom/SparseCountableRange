@@ -69,15 +69,15 @@ public struct SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride
     get { return _ranges.isEmpty }
   }
 
-  /// Inspect the `subject` and extract zero or more ranges which the correction
-  /// does not contain.
+  /// Return zero or more ranges which subject contains but the collection
+  /// does not.
   ///
   /// let r = SparseCountableRange<Int>(initial: [10..<20, 30..<40])
-  /// r.gaps(1..<5)  // [1..<5]
-  /// r.gaps(1..<50) // [1..<5, 20..<30, 40..<50]
+  /// r.differentials(1..<5)  // [1..<5]
+  /// r.differentials(1..<50) // [1..<10, 20..<30, 40..<50]
   ///
   /// - TODO: rename to more accurate one.
-  public func gaps(_ subject: CountableRange<Bound>) -> [CountableRange<Bound>]? {
+  public func differentials(_ subject: CountableRange<Bound>) -> [CountableRange<Bound>]? {
     var i = 0
     var result: [CountableRange<Bound>]?
     var range = subject
@@ -85,7 +85,7 @@ public struct SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride
       if _ranges[i].upperBound <= range.lowerBound {
         // `range` comes after `i`
         // i:   |----|
-        // new:      |----|
+        // s:        |----|
         i += 1
         continue
       }
@@ -93,14 +93,14 @@ public struct SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride
       if range.upperBound <= _ranges[i].lowerBound {
         // `range` comes before `i`
         // i:        |----|
-        // new: |----|
+        // s:   |----|
         return result == nil ? [range] : result! + [range]
       }
 
       if _ranges[i].lowerBound <= range.lowerBound && range.upperBound <= _ranges[i].upperBound {
         // `i` contains entire `range`
         // i:   |----|
-        // new: |----|
+        // s:   |----|
         return result
       }
 
@@ -113,12 +113,12 @@ public struct SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride
         if range.upperBound <= _ranges[i].upperBound {
           // `range` overlaps at the head of `i`...
           // i:     |----|
-          // new: |----|
+          // s:   |----|
           return result
         } else {
           // `range` contains  `i`...
           // i:     |----|
-          // new: |-------|
+          // s:   |-------|
           range = _ranges[i].upperBound ..< range.upperBound
           i += 1
           continue
@@ -126,7 +126,7 @@ public struct SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride
       } else {
         // `range` overlaps at the tail of `i`...
         // i:   |----|
-        // new:    |----|
+        // s:      |----|
         range = _ranges[i].upperBound ..< range.upperBound
         i += 1
         continue
