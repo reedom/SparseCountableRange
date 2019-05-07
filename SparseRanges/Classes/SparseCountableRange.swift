@@ -137,6 +137,56 @@ public struct SparseCountableRange<Bound> where Bound : Strideable, Bound.Stride
     return result == nil ? [range] : result! + [range]
   }
 
+  /// Returns zero or more ranges that both of the collection and
+  /// subject contain.
+  ///
+  /// let r = SparseCountableRange<Int>(initial: [10..<20, 30..<40])
+  /// r.intersects(1..<5)  // nil
+  /// r.intersects(1..<35) // [10..<20, 30..<35]
+  ///
+  /// - TODO: rename to more accurate one.
+  public func intersects(_ subject: CountableRange<Bound>) -> [CountableRange<Bound>]? {
+    var i = 0
+    var result: [CountableRange<Bound>]?
+    var range = subject
+    while i < _ranges.endIndex {
+      if _ranges[i].upperBound <= range.lowerBound {
+        // `range` comes after `i`
+        // i:   |----|
+        // s:        |----|
+        i += 1
+        continue
+      }
+
+      if range.upperBound <= _ranges[i].lowerBound {
+        // `range` comes before `i`
+        // i:        |----|
+        // new: |----|
+        return result
+      }
+
+      if _ranges[i].lowerBound <= range.lowerBound && range.upperBound <= _ranges[i].upperBound {
+        // `i` contains entire `range`
+        // i:   |----|
+        // new: |----|
+        return result == nil ? [range] : result! + [range]
+      }
+
+      if result == nil {
+        result = []
+      }
+      result!.append(max(range.lowerBound, _ranges[i].lowerBound) ..< min(range.upperBound, _ranges[i].upperBound))
+
+      if _ranges[i].upperBound < range.upperBound {
+        range = _ranges[i].upperBound..<range.upperBound
+      }
+      i += 1
+    }
+
+    // `range` is not found
+    return result
+  }
+
   /// Add a range to the collection.
   /// If the range overlaps with any ranges in the collection,
   /// a merging will take place.

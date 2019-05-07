@@ -75,25 +75,30 @@ class SparseCountableRangeSpec: QuickSpec {
       }
     }
 
+    describe("intercects") {
+      it("will return nil if the collection has no ranges") {
+        let r = SparseCountableRange<Int>()
+        expect(r.intersects(0..<2)).to(beNil())
+      }
+
+      it("will return intersects") {
         let r = SparseCountableRange<Int>(initial: [10..<20, 30..<40, 50..<60])
-        expect(r.gaps(1..<9)) == [1..<9]
-        expect(r.gaps(1..<10)) == [1..<10]
-        expect(r.gaps(1..<11)) == [1..<10]
-        expect(r.gaps(1..<20)) == [1..<10]
-        expect(r.gaps(10..<20)).to(beNil())
-        expect(r.gaps(1..<61)) == [1..<10, 20..<30, 40..<50, 60..<61]
-        expect(r.gaps(25..<61)) == [25..<30, 40..<50, 60..<61]
-        expect(r.gaps(60..<70)) == [60..<70]
-        expect(r.gaps(61..<70)) == [61..<70]
+        expect(r.intersects(1..<9)).to(beNil())
+        expect(r.intersects(1..<10)).to(beNil())
+        expect(r.intersects(1..<11)) == [10..<11]
+        expect(r.intersects(1..<20)) == [10..<20]
+        expect(r.intersects(10..<20)) == [10..<20]
+        expect(r.intersects(1..<61)) == [10..<20, 30..<40, 50..<60]
+        expect(r.intersects(60..<70)).to(beNil())
       }
     }
-    
+
     describe("add") {
       it("will return false for empty range") {
         var r = SparseCountableRange<Int>()
         expect(r.add(0..<0)).to(beFalse())
       }
-      
+
       it("will add") {
         var r = SparseCountableRange<Int>()
         // initial
@@ -119,7 +124,7 @@ class SparseCountableRangeSpec: QuickSpec {
         expect(r.add(1..<70)).to(beTrue())
         expect(r.ranges) == [1..<70]
       }
-      
+
       it("will return false for already contained ranges") {
         var r = SparseCountableRange<Int>(initial: [1..<10])
         expect(r.add(1..<10)).to(beFalse())
